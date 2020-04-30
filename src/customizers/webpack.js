@@ -118,7 +118,7 @@ export const enableEslintTypescript = () => config => {
   return config;
 };
 
-export const addLessLoader = (loaderOptions = {}) => config => {
+export const addLessLoader = (loaderOptions = { lessOptions: {} }) => config => {
   const mode = process.env.NODE_ENV === "development" ? "dev" : "prod";
 
   // Need these for production mode, which are copied from react-scripts
@@ -129,7 +129,7 @@ export const addLessLoader = (loaderOptions = {}) => config => {
   const lessRegex = /\.less$/;
   const lessModuleRegex = /\.module\.less$/;
   const localIdentName =
-    loaderOptions.localIdentName || "[path][name]__[local]--[hash:base64:5]";
+    loaderOptions.lessOptions.localIdentName || "[path][name]__[local]--[hash:base64:5]";
 
   const getLessLoader = cssOptions => {
     return [
@@ -165,7 +165,7 @@ export const addLessLoader = (loaderOptions = {}) => config => {
       {
         loader: require.resolve("less-loader"),
         options: Object.assign(loaderOptions, {
-          source: shouldUseSourceMap
+          sourceMap: shouldUseSourceMap
         })
       }
     ];
